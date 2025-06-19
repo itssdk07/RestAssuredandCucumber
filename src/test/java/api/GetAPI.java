@@ -8,9 +8,8 @@ import io.restassured.response.Response;
 public class GetAPI {
 
 	public static Response fetchUserByID(int id) {
-		return given() 
-				 .baseUri("https://reqres.in")
-				.when().get("/api/users/" + id);
+		RestAssured.baseURI = "https://reqres.in/api/users/" + id;
+		return RestAssured.given().when().get().then().extract().response();
 		
 	}
 }
