@@ -10,7 +10,7 @@ A scalable and modular API automation framework built using **Java**, **RestAssu
 - **RestAssured** – API interaction & validation
 - **Cucumber** – BDD framework for test cases
 - **Maven** – Build automation & dependency management
-- **JUnit** – Test runner (can be swapped with TestNG if needed)
+- **TestNG** – Test runner (can be swapped with JUnit if needed)
 
 ---
 
