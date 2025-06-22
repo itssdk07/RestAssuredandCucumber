@@ -12,4 +12,9 @@ public class GetAPI {
 		return RestAssured.given().when().get().then().extract().response();
 		
 	}
+	
+	public static Response fetchUsersPage(int pageno) {
+		RestAssured.baseURI = "https://reqres.in";
+		return RestAssured.given().queryParam("page",pageno).when().get("api/users").then().extract().response();
+	}
 }

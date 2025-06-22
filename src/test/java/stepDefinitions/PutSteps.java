@@ -21,6 +21,7 @@ public class PutSteps {
 	@When("Update name of the user {int} as {string}")
 	public void testUpdateUserName(Integer ID, String name) {
 		response = PutAPI.updateUserDetails(ID, name);
+		Context.latestApiResponse = response;  //AI suggestion for later saving response
 		json = response.jsonPath();
 		
 		//get actual values
@@ -53,6 +54,9 @@ public class PutSteps {
 		@When("Update name of the user {int} as {string} and job as {string}")
 		public void testUpdateNameJob(Integer ID, String name, String job) {
 			response = PutAPI.updateUserDetails(ID, name, job);
+			
+			Context.latestApiResponse = response;  //AI suggestion for later saving response
+			
 			json = response.jsonPath();
 			
 			//get Actual data

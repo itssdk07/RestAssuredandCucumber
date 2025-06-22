@@ -12,11 +12,15 @@ import io.restassured.response.Response;
 
 public class GetSteps {
 	Response res;
+	int actualStatusCode;
+	int actualpageno;
+	int actualTotalUsersOnPage;
+	int actualUserCount;
 	
 	@When("I fetch the user with ID {int}")
 	public void fetchUser(Integer id) {
 	res = GetAPI.fetchUserByID(id);
-	System.out.println("Response of Get Request " + res.getBody().asPrettyString());
+	Context.latestApiResponse = res;  //AI suggestion for later saving response
 	}
 	
 	@Then("I verify correct User is visible or not") 
@@ -37,9 +41,38 @@ public class GetSteps {
 	
 	@Then("I verify 404 error shows or not")
 	public void fetchInvalidUser() {
-		System.out.println("Response of Get Request " + res.getBody().asPrettyString()+ "Status code : " + res.getStatusCode());
 		assertEquals(res.getStatusCode(),401,"incorrect Status code");
 	}
+	
+	
+	@When("I fetch the users from page {int}")
+	public void testFetchUsersPage(Integer pageno) {
+		res = GetAPI.fetchUsersPage(pageno);
+		Context.latestApiResponse = res;  //AI suggestion for later saving response
+				//fetch acutal values
+				JsonPath json = res.jsonPath();
+				actualStatusCode = res.getStatusCode();
+				actualpageno = json.getInt("page");
+				actualUserCount = json.getList("data").size();
+		
+	}
+	
+	@Then("I should get a list of users with page number {int}")
+	public void verifyPageNo(Integer pageno) {
+		assertEquals(actualpageno,pageno,"Page Number is mismatched");
+		
+	}
+	
+	@Then("Status code should be {int}")
+	public void verifyStatusCode(Integer statuscode) {
+		assertEquals(actualStatusCode, statuscode, "Status code Mismatched");
+	}
+	
+	@Then("User list should not be empty")
+	public void verifyUserList() {
+		assertTrue(actualUserCount>0, "User list is empty");
+	}
+	
 	
 	}
 

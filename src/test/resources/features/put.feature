@@ -1,4 +1,4 @@
-Feature: I want to update an existing user name using PUT method So that I can verify the user data is correctly updated
+Feature: I want to update an existing user using PUT method So that I can verify the user data is correctly updated
 
 Scenario: Update user name of the valid User
 When Update name of the user 2 as "APItest"
